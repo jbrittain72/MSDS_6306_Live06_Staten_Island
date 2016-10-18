@@ -1,4 +1,4 @@
-# MSDS_6306_Live06_Staten_Island
+﻿# MSDS_6306_Live06_Staten_Island
 
 Live Session Unit 6 - Case Study Practice
   (Due Tuesday, Oct. 18)
@@ -50,3 +50,6 @@ other attached packages:
 
 loaded via a namespace (and not attached):
 [1] tools_3.3.1  Rcpp_0.12.7  gtools_3.5.0
+
+
+Added 1 line
