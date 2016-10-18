@@ -3,8 +3,8 @@
 Live Session Unit 6 - Case Study Practice
   (Due Tuesday, Oct. 18)
   
-Live Session 06 Team:
------------------------
+Live Session 06 Team
+---------------------
 Jim Brittain - jbrittain@smu.edu
 Ruby Vazquez Pena -rvazquezpena@mail.smu.edu
 Crystal Todd - ctodd@mail.smu.edu
@@ -18,10 +18,9 @@ Copyright Info: NA? (RUBY! HELP!)
 
 The folders are organized as such:
 Main
- - ??
- - ??
- - ?? (RUBY! HELP!)
-   -- ????
+ - /ANALYSIS
+ - /DATA
+ - /PAPER
 
 Reproducing the Output:
 
@@ -51,7 +50,3 @@ other attached packages:
 loaded via a namespace (and not attached):
 [1] tools_3.3.1  Rcpp_0.12.7  gtools_3.5.0
 
-
-Added 1 line
-
-add another
