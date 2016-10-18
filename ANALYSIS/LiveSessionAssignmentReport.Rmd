@@ -1,0 +1,80 @@
+---
+title:  "Rolling Sales for Staten Island"
+author: "Crystal Todd" 
+date:   "October 18, 2016"
+output: html_document
+Modified: "Jim Brittain"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plyr)
+library(gdata)
+setwd("D:/Users/Jim/SMU/MSDS 6306 DOING DATA SCIENCE/GIT/MSDS_6306_Live06_Staten_Island")
+si <- read.csv("D:/Users/Jim/SMU/MSDS 6306 DOING DATA SCIENCE/GIT/MSDS_6306_Live06_Staten_Island/DATA/rollingsales_statenisland.csv",skip=4,header=TRUE)
+
+## Check the data
+head(si)
+summary(si)
+str(si) # Very handy function!
+
+## clean/format the data with regular expressions
+## More on these later. For now, know that the
+## pattern "[^[:digit:]]" refers to members of the variable name that
+## start with digits. We use the gsub command to replace them with a blank space.
+# We create a new variable that is a "clean' version of sale.price.
+# And sale.price.n is numeric, not a factor.
+si$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]","", si$SALE.PRICE))
+count(is.na(si$SALE.PRICE.N))
+
+names(si) <- tolower(names(si)) # make all variable names lower case
+## Get rid of leading digits
+si$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", si$gross.square.feet))
+si$land.sqft <- as.numeric(gsub("[^[:digit:]]","", si$land.square.feet))
+si$year.built <- as.numeric(as.character(si$year.built))
+
+## do a bit of exploration to make sure there's not anything
+## weird going on with sale prices
+attach(si)
+hist(sale.price.n) 
+detach(si)
+
+## keep only the actual sales
+
+si.sale <- si[si$sale.price.n!=0,]
+```
+## Results
+
+We will show our process through the analysis to justify the steps taken based on the data's behaviour.
+```{r, echo=FALSE}
+plot(si.sale$gross.sqft,si.sale$sale.price.n)
+```
+
+This plot is difficult to see more of the data since the points between 0 and 50,000 are extremely overlapping.
+```{r, echo=FALSE}
+plot(log10(si.sale$gross.sqft),log10(si.sale$sale.price.n))
+```
+
+Taking the logarithm of both the gross square feet of the house and the sale price allows for better analysis. Most of the data appears to follow the upward trend of the larger the square feet, the bigger the selling price for the house was. Now, we shall look at the 1-, 2-, and 3- family homes.
+
+```{r, echo=FALSE}
+## for now, let's look at 1-, 2-, and 3-family homes
+si.homes <- si.sale[which(grepl("FAMILY",si.sale$building.class.category)),]
+#dim(si.homes)
+plot(log10(si.homes$gross.sqft),log10(si.homes$sale.price.n))
+summary(si.homes[which(si.homes$sale.price.n<100000),])
+```
+
+The summary statement on the data shows that some homes were bought for one dollar. There appears to be some data that are not actual sales. The plot is based on the full data set. Next, we will remove outliers to see if a better restult is produced.
+
+```{r pressure, echo=FALSE}
+## remove outliers that seem like they weren't actual sales
+si.homes$outliers <- (log10(si.homes$sale.price.n) <=5) + 0
+si.homes <- si.homes[which(si.homes$outliers==0),]
+plot(log(si.homes$gross.sqft),log(si.homes$sale.price.n))
+```
+
+After removing the outliers that did not appear to be actual sales, we can compare the area in each house by the sale price. We can see that the overall trend of the data is that the larger the square footage in a house, the higher the selling price is based on the above graph.
+
+## Conclusion
+Visually, we found that the higher sales in homes had larger square feet as well as the lower sales prices had less square footage.
