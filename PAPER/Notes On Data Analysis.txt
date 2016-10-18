@@ -1,0 +1,7 @@
+Taking the logarithm of both the gross square feet of the house and the sale price allows for better analysis. Most of the data appears to follow the upward trend of the larger the square feet, the bigger the selling price for the house was. 
+
+The summary statement on the data shows that some homes were bought for one dollar. There appears to be some data that are not actual sales. 
+
+After removing the outliers that did not appear to be actual sales we ran our analysis.  We can see that the overall trend of the data is that the larger the square footage in a house, the higher the selling price is.
+
+Visually, we found that the higher sales in homes had larger square feet as well as the lower sales prices had less square footage.
